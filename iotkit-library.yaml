@@ -80,7 +80,9 @@ templates:
     description: IoT Starter kit with Jenkins on A1
     services:
     - name: arm-build-server
-      serviceId: arm-build-server      
+      serviceId: arm-build-server
     - name: github-repo
       serviceId: github-repo
+    - name: jenkins-pipeline
+      serviceId: jenkins-pipeline
     title: IoT Starter kit with Jenkins on A1
