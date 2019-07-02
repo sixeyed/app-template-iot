@@ -16,3 +16,13 @@ services:
     image: sixeyed/iotkit-jenkins-pipeline
     build:
       context: ./services/jenkins-pipeline
+
+  arm-device-scaffold-svc:
+    image: sixeyed/iotkit-arm-device
+    build:
+      context: ./services/arm-device
+
+  github-repo-scaffold-svc:
+    image: sixeyed/iotkit-docker-hub-repo
+    build:
+      context: ./services/docker-hub-repo

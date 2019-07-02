@@ -69,6 +69,50 @@ services:
     - name: password
       description: Password
       type: string
+- apiVersion: v1alpha1
+  kind: ServiceTemplate
+  metadata:
+    name: docker-hub-repo
+    platforms:
+      - linux
+  spec:
+    description: Connect to Docker Hub
+    icon: https://raw.githubusercontent.com/sixeyed/app-template-iot/master/img/docker.png
+    source:
+      image: sixeyed/iotkit-docker-hub-repo
+    title: Connect to Docker Hub
+    parameters:
+    - name: username
+      description: Username
+      type: string
+    - name: password
+      description: Password
+      type: string      
+    - name: repoName
+      description: Repository name
+      type: string      
+- apiVersion: v1alpha1
+  kind: ServiceTemplate
+  metadata:
+    name: arm-device
+    platforms:
+      - linux
+  spec:
+    description: Deploy to local Arm device
+    icon: https://raw.githubusercontent.com/sixeyed/app-template-iot/master/img/arm.png
+    source:
+      image: sixeyed/iotkit-arm-device
+    title: Deploy to local Arm device
+    parameters:
+    - name: ipAddress
+      description: IP address
+      type: string
+    - name: username
+      description: SSH username
+      type: string
+    - name: password
+      description: SSH password
+      type: string    
 templates:
 - apiVersion: v1alpha1
   kind: ApplicationTemplate
@@ -83,6 +127,10 @@ templates:
       serviceId: arm-build-server
     - name: github-repo
       serviceId: github-repo
+    - name: docker-hub-repo
+      serviceId: docker-hub-repo      
     - name: jenkins-pipeline
-      serviceId: jenkins-pipeline
+      serviceId: jenkins-pipeline      
+    - name: arm-device
+      serviceId: arm-device
     title: IoT Starter kit with Jenkins on A1

@@ -1,0 +1,12 @@
+FROM alpine:3.9
+
+RUN apk --no-cache update && \
+    apk --no-cache add openssl openssh-client sshpass jq docker && \
+    rm -rf /var/cache/apk/*
+
+ENTRYPOINT ["sh"]
+CMD ["setup.sh"]
+
+COPY ./remote/* ./
+COPY ./outputs/* ./
+COPY ./setup.sh .

@@ -1,0 +1,11 @@
+{
+  "": "0",
+  "credentials": {
+    "scope": "GLOBAL",
+    "id": "github",
+    "username": "",
+    "password": "",
+    "description": "github",
+    "$class": "com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl"
+  }
+}

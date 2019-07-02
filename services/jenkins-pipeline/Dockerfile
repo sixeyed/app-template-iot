@@ -4,5 +4,5 @@ ENTRYPOINT ["sh"]
 CMD ["setup.sh"]
 
 COPY ./docker-compose.yaml .
-COPY ./pipeline.xml .
+COPY ./resources/ ./
 COPY ./setup.sh .

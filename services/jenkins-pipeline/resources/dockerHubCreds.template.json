@@ -1,0 +1,11 @@
+{
+    "": "0",
+    "credentials": {
+      "scope": "GLOBAL",
+      "id": "docker-hub",
+      "username": "",
+      "password": "",
+      "description": "docker-hub",
+      "$class": "com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl"
+    }
+  }
