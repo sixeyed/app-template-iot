@@ -1,0 +1,13 @@
+version: "3.6"
+
+configs:
+  {{ .Name }}-dns:
+    file: {{ .Name }}/server-dns
+
+secrets:
+  {{ .Name }}-docker-ca:
+    file: {{ .Name }}/certs/ca.pem
+  {{ .Name }}-docker-cert:
+    file: {{ .Name }}/certs/cert.pem
+  {{ .Name }}-docker-key:
+    file: {{ .Name }}/certs/key.pem

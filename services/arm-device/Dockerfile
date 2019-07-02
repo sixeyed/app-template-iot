@@ -8,5 +8,5 @@ ENTRYPOINT ["sh"]
 CMD ["setup.sh"]
 
 COPY ./remote/* ./
-COPY ./outputs/* ./
+COPY ./assets/* /assets/
 COPY ./setup.sh .

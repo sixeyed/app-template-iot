@@ -93,5 +93,10 @@ echo "** Writing outputs"
 # cat tmp.json > /run/configuration
 
 mkdir -p /project/certs
-cp docker-compose.yaml /project/docker-compose.yaml
-cp /certs/* /project/certs/
+cp /certs/ca.pem /project/certs
+cp /certs/cert.pem /project/certs
+cp /certs/key.pem /project/certs
+echo $PUBLIC_DNS > /project/server-dns
+
+/interpolator -source /assets -destination /assets
+cp /assets/docker-compose.yaml /project/docker-compose.yaml
