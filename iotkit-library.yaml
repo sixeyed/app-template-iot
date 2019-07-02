@@ -1,0 +1,43 @@
+apiVersion: v1alpha1
+generated: "2018-06-13T09:24:07.392654524Z"
+kind: RepositoryContent
+services:
+- apiVersion: v1alpha1
+  kind: ServiceTemplate
+  metadata:
+    name: arm-build-server
+    platforms:
+      - linux
+  spec:
+    description: Arm build server on AWS
+    icon: https://raw.githubusercontent.com/sixeyed/app-template-iot/master/img/aws.png
+    source:
+      image: sixeyed/iotkit-arm-build-server
+    title: Arm build server on AWS
+    parameters:
+    - name: projectName
+      description: Project name
+      type: string
+    - name: accessKeyId
+      description: AWS access key Id
+      type: string
+    - name: secretAccessKey
+      description: AWS secret access key
+      type: string
+    - name: defaultRegion
+      defaultValue: us-east-2
+      description: Default region
+      type: string
+templates:
+- apiVersion: v1alpha1
+  kind: ApplicationTemplate
+  metadata:
+    name: iot-starter-kit
+    platforms:
+    - linux
+  spec:
+    description: IoT Starter kit with Jenkins on A1
+    services:
+    - name: arm-build-server
+      serviceId: arm-build-server
+    title: IoT Starter kit with Jenkins on A1

@@ -1,0 +1,8 @@
+version: "3.6"
+
+services:
+
+  aws-scaffold-svc:
+    image: sixeyed/iotkit-arm-build-server
+    build:
+      context: ./services/arm-build-server

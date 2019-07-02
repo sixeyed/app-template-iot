@@ -12,4 +12,5 @@ ENTRYPOINT ["sh"]
 CMD ["setup.sh"]
 
 COPY ./remote/* ./
+COPY ./docker-compose.yaml .
 COPY ./setup.sh .
