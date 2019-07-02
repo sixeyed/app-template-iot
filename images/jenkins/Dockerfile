@@ -15,14 +15,15 @@ RUN mkdir -p /usr/share/jenkins/ref/init.groovy.d
 COPY jenkins-support /usr/local/bin/jenkins-support
 COPY install-plugins.sh /usr/local/bin/install-plugins.sh
 COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
+COPY jenkins.sh /usr/local/bin/jenkins.sh
 
 RUN chmod +x /usr/local/bin/jenkins-support && \
     chmod +x /usr/local/bin/install-plugins.sh && \
+    chmod +x /usr/local/bin/jenkins.sh && \
     /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt && \
     echo 2.0 > /usr/share/jenkins/ref/jenkins.install.UpgradeWizard.state
 
 ENTRYPOINT /usr/local/bin/jenkins.sh
 
 COPY admin.groovy /usr/share/jenkins/ref/init.groovy.d/admin.groovy
-COPY jenkins.sh /usr/local/bin/jenkins.sh
 COPY ./secrets /run/secrets

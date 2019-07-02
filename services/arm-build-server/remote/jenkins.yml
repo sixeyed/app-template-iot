@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
   jenkins:
-    image: iotkitdemo/jenkins
+    image: iotkitdemo/jenkins:2.176.1
     ports:
       - "8080:8080"
     volumes:
