@@ -18,7 +18,7 @@ COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
 
 RUN chmod +x /usr/local/bin/jenkins-support \
     chmod +x /usr/local/bin/install-plugins.sh \
-    /usr/local/bin/install-plugins.sh <  /usr/share/jenkins/ref/plugins.txt \
+    /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt \
     echo 2.0 > /usr/share/jenkins/ref/jenkins.install.UpgradeWizard.state
 
 ENTRYPOINT /usr/local/bin/jenkins.sh
