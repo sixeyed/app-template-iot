@@ -37,7 +37,7 @@ echo extendedKeyUsage = clientAuth > /certs/extfile-client.cnf
 openssl x509 -req -days 3650 -sha256 -in /certs/client.csr -CA /certs/ca.pem -CAkey /certs/ca-key.pem -CAcreateserial -out /certs/cert.pem -extfile /certs/extfile-client.cnf -passin file:/certs/ca.password
 
 n=0
-until [ $n -ge 5 ]
+until [ $n -ge 10 ]
 do
   PUBLIC_DNS=$(aws ec2 describe-instances --filters "Name=tag:project,Values=$PROJECT_NAME" --query "Reservations[].Instances[].PublicDnsName" | jq '.[0]' -r)
   if [ -z "$PUBLIC_DNS" ]
@@ -47,7 +47,7 @@ do
     echo "** EC2 instance created, public DNS: $PUBLIC_DNS"
     break
   fi  
-  n=$[$n+1]
+  n=$((n+1))
   sleep 5
 done
 

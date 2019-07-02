@@ -31,7 +31,7 @@ url="http://$PUBLIC_DNS:8080"
 # spin until Jenkins is ready
 find='Please wait while Jenkins'
 n=0
-until [ $n -ge 5 ]
+until [ $n -ge 10 ]
 do
   index=$(curl -L $url)
   if test "${index#*$find}" != "$index"
@@ -41,7 +41,7 @@ do
   else
     echo '** Jenkins is starting up; I will wait'
   fi  
-  n=$[$n+1]
+  n=$((n+1))
   sleep 10
 done
 
