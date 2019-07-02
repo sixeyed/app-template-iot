@@ -1,3 +1,5 @@
+admin-username
+admin-password
 
 JENKINS_URL=http://ec2-18-216-29-4.us-east-2.compute.amazonaws.com:8080
 

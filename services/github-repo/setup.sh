@@ -7,4 +7,4 @@ accessToken=$(echo "$parameters" | jq -c '.accessToken' --raw-output)
 repoName=$(echo "$parameters" | jq -c '.repoName' --raw-output)
 
 echo "* Creating GitHub repo: $repoName, user: $username"
-curl -XPOST -u $username:$accessToken https://api.github.com/user/repos -d "{'name':'$repoName','description':'IoT Starter Kit demo'}"
+curl -XPOST -u $username:$accessToken https://api.github.com/user/repos -d '{"name":"'$repoName'","description":"IoT Starter Kit demo"}'

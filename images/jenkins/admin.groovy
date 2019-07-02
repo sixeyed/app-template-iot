@@ -8,12 +8,11 @@ import hudson.util.*;
 
 def instance = Jenkins.getInstance()
 
-// def user = new File("/run/secrets/jenkins-user").text.trim()
-// def pass = new File("/run/secrets/jenkins-pass").text.trim()
+def username = new File("/run/secrets/jenkins-username").text.trim()
+def password = new File("/run/secrets/jenkins-password").text.trim()
 
 def hudsonRealm = new HudsonPrivateSecurityRealm(false)
-// hudsonRealm.createAccount(user, pass)
-hudsonRealm.createAccount("iotkit", "hudew7dt76g")
+hudsonRealm.createAccount(username, password)
 instance.setSecurityRealm(hudsonRealm)
 
 def strategy = new FullControlOnceLoggedInAuthorizationStrategy()

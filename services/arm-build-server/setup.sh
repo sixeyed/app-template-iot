@@ -57,14 +57,20 @@ scp -oStrictHostKeyChecking=no -i /certs/ec2-key-pair.pem /certs/server-key.pem 
 scp -oStrictHostKeyChecking=no -i /certs/ec2-key-pair.pem /certs/server-cert.pem ubuntu@$PUBLIC_DNS:/tmp
 ssh -oStrictHostKeyChecking=no -i /certs/ec2-key-pair.pem ubuntu@$PUBLIC_DNS 'bash -s' < configure-docker.sh
 
-echo "** Deploying Jenkins service"
+
 export DOCKER_HOST="tcp://$PUBLIC_DNS:2376"
 export DOCKER_TLS_VERIFY='1'
 export DOCKER_CERT_PATH='/certs'
 docker swarm init
 
-#TODO - docker secret create, admin user & pwd
+echo "** Creating secrets for Jenkins credentials"
+parameters=$(jq -c '.services | map(select(.serviceId == "jenkins-pipeline"))[0].parameters' /run/configuration)
+jenkinsUsername=$(echo "$parameters" | jq -c '.username' --raw-output)
+jenkinsPassword=$(echo "$parameters" | jq -c '.password' --raw-output)
+echo $jenkinsUsername | docker secret create jenkins-username -
+echo $jenkinsPassword | docker secret create jenkins-password -
 
+echo "** Deploying Jenkins service"
 docker stack deploy -c jenkins.yml jenkins
 
 mkdir -p /project/certs

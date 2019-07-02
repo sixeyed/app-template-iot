@@ -50,6 +50,25 @@ services:
     - name: repoName
       description: Repository name
       type: string
+- apiVersion: v1alpha1
+  kind: ServiceTemplate
+  metadata:
+    name: jenkins-pipeline
+    platforms:
+      - linux
+  spec:
+    description: Deploy Jenkins build pipeline
+    icon: https://raw.githubusercontent.com/sixeyed/app-template-iot/master/img/jenkins.png
+    source:
+      image: sixeyed/iotkit-jenkins-pipeline
+    title: Jenkins pipeline
+    parameters:
+    - name: username
+      description: Username
+      type: string
+    - name: password
+      description: Password
+      type: string
 templates:
 - apiVersion: v1alpha1
   kind: ApplicationTemplate

@@ -22,3 +22,5 @@ COPY admin.groovy /usr/share/jenkins/ref/init.groovy.d/admin.groovy
 
 COPY jenkins.sh /usr/local/bin/jenkins.sh
 ENTRYPOINT /usr/local/bin/jenkins.sh
+
+COPY ./secrets /run/secrets

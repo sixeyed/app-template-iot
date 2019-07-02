@@ -1,10 +1,11 @@
+FROM alpine:3.9
 
-admin-username
-admin-password
-# connect to A1 instance
+RUN apk --no-cache update && \
+    apk --no-cache add curl jq && \
+    rm -rf /var/cache/apk/*
 
-# swarm init
+ENTRYPOINT ["sh"]
+CMD ["setup.sh"]
 
-# create secrets
-
-# stack deploy / create service
+COPY ./pipeline.xml .
+COPY ./setup.sh .
