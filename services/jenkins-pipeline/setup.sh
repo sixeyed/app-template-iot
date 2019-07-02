@@ -41,7 +41,3 @@ curl -X POST "http://$JENKINS_USER:$JENKINS_PASSWORD@$JENKINS_DOMAIN:8080/creden
 
 curl -s -XPOST "http://$JENKINS_DOMAIN:8080/createItem?name=iotkit' -u $JENKINS_USER:$JENKINS_PASSWORD --data-binary @pipeline.xml -H "Content-Type:text/xml"
 
-
-GITHUB_ACCESS_TOKEN="8a27dea8201ae710b3b963df3e6ffe9f9593bb34"
-
-curl -XPOST -u iotkitdemo:$GITHUB_ACCESS_TOKEN https://api.github.com/user/repos -d '{"name":"my-new-repo","description":"my new repo description"}'

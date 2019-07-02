@@ -13,7 +13,7 @@ services:
     icon: https://raw.githubusercontent.com/sixeyed/app-template-iot/master/img/aws.png
     source:
       image: sixeyed/iotkit-arm-build-server
-    title: Arm build server on AWS
+    title: Jenkins running on an A1 AWS instance for building Arm projects
     parameters:
     - name: projectName
       description: Project name
@@ -28,6 +28,28 @@ services:
       defaultValue: us-east-2
       description: Default region
       type: string
+- apiVersion: v1alpha1
+  kind: ServiceTemplate
+  metadata:
+    name: github-repo
+    platforms:
+      - linux
+  spec:
+    description: Create new GitHub repo
+    icon: https://raw.githubusercontent.com/sixeyed/app-template-iot/master/img/github.png
+    source:
+      image: sixeyed/iotkit-github-repo
+    title: GitHub repo
+    parameters:
+    - name: username
+      description: Username
+      type: string
+    - name: accessToken
+      description: Access token
+      type: string
+    - name: repoName
+      description: Repository name
+      type: string
 templates:
 - apiVersion: v1alpha1
   kind: ApplicationTemplate
@@ -39,5 +61,7 @@ templates:
     description: IoT Starter kit with Jenkins on A1
     services:
     - name: arm-build-server
-      serviceId: arm-build-server
+      serviceId: arm-build-server      
+    - name: github-repo
+      serviceId: github-repo
     title: IoT Starter kit with Jenkins on A1

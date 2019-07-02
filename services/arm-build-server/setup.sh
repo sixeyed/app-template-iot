@@ -62,6 +62,9 @@ export DOCKER_HOST="tcp://$PUBLIC_DNS:2376"
 export DOCKER_TLS_VERIFY='1'
 export DOCKER_CERT_PATH='/certs'
 docker swarm init
+
+#TODO - docker secret create, admin user & pwd
+
 docker stack deploy -c jenkins.yml jenkins
 
 mkdir -p /project/certs
