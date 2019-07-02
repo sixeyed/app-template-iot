@@ -22,7 +22,7 @@ services:
     build:
       context: ./services/arm-device
 
-  github-repo-scaffold-svc:
+  docker-hub-repo-scaffold-svc:
     image: sixeyed/iotkit-docker-hub-repo
     build:
       context: ./services/docker-hub-repo
