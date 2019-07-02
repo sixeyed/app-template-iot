@@ -36,8 +36,20 @@ openssl req -subj '/CN=client' -new -key /certs/key.pem -out /certs/client.csr
 echo extendedKeyUsage = clientAuth > /certs/extfile-client.cnf
 openssl x509 -req -days 3650 -sha256 -in /certs/client.csr -CA /certs/ca.pem -CAkey /certs/ca-key.pem -CAcreateserial -out /certs/cert.pem -extfile /certs/extfile-client.cnf -passin file:/certs/ca.password
 
-PUBLIC_DNS=$(aws ec2 describe-instances --filters "Name=tag:project,Values=$PROJECT_NAME" --query "Reservations[].Instances[].PublicDnsName" | jq '.[0]' -r)
-echo "** EC2 instance created, public DNS: $PUBLIC_DNS"
+n=0
+until [ $n -ge 5 ]
+do
+  PUBLIC_DNS=$(aws ec2 describe-instances --filters "Name=tag:project,Values=$PROJECT_NAME" --query "Reservations[].Instances[].PublicDnsName" | jq '.[0]' -r)
+  if [ -z "$PUBLIC_DNS" ]
+  then 
+    echo "** EC2 instance created, waiting on public DNS"
+  else
+    echo "** EC2 instance created, public DNS: $PUBLIC_DNS"
+    break
+  fi  
+  n=$[$n+1]
+  sleep 5
+done
 
 echo "** Generating server cert"
 openssl genrsa -out /certs/server-key.pem 4096
@@ -57,7 +69,6 @@ scp -oStrictHostKeyChecking=no -i /certs/ec2-key-pair.pem /certs/server-key.pem 
 scp -oStrictHostKeyChecking=no -i /certs/ec2-key-pair.pem /certs/server-cert.pem ubuntu@$PUBLIC_DNS:/tmp
 ssh -oStrictHostKeyChecking=no -i /certs/ec2-key-pair.pem ubuntu@$PUBLIC_DNS 'bash -s' < configure-docker.sh
 
-
 export DOCKER_HOST="tcp://$PUBLIC_DNS:2376"
 export DOCKER_TLS_VERIFY='1'
 export DOCKER_CERT_PATH='/certs'
@@ -72,6 +83,14 @@ echo $jenkinsPassword | docker secret create jenkins-password -
 
 echo "** Deploying Jenkins service"
 docker stack deploy -c jenkins.yml jenkins
+
+echo "** Writing outputs"
+
+# this doesn't work - subsequent services get their own copy of the original JSON, not this amended version
+# url="http://$PUBLIC_DNS:8080"
+# jq --arg u "$url" '.outputs[] | {outputs: [{serviceId: .serviceId, output: {url: $u}}]}' output.json > out.json
+# jq -s '.[0] + .[1]' /run/configuration out.json > tmp.json
+# cat tmp.json > /run/configuration
 
 mkdir -p /project/certs
 cp docker-compose.yaml /project/docker-compose.yaml

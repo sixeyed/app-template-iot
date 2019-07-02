@@ -1,0 +1,10 @@
+{
+    "outputs": [
+      {
+        "serviceId": "arm-build-server",
+        "output": {
+          "url": ""
+        }
+      }
+    ]
+  }

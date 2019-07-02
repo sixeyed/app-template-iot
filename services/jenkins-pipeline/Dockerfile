@@ -1,11 +1,8 @@
-FROM alpine:3.9
-
-RUN apk --no-cache update && \
-    apk --no-cache add curl jq && \
-    rm -rf /var/cache/apk/*
+FROM iotkitdemo/aws-cli
 
 ENTRYPOINT ["sh"]
 CMD ["setup.sh"]
 
+COPY ./docker-compose.yaml .
 COPY ./pipeline.xml .
 COPY ./setup.sh .

@@ -7,4 +7,5 @@ RUN apk --no-cache update && \
 ENTRYPOINT ["sh"]
 CMD ["setup.sh"]
 
+COPY ./docker-compose.yaml .
 COPY ./setup.sh .

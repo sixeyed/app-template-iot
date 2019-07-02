@@ -1,19 +1,46 @@
-admin-username
-admin-password
+#!/bin/sh
 
-JENKINS_URL=http://ec2-18-216-29-4.us-east-2.compute.amazonaws.com:8080
+# parse parameters
+parameters=$(jq -c '.services | map(select(.serviceId == "jenkins-pipeline"))[0].parameters' /run/configuration)
+username=$(echo "$parameters" | jq -c '.username' --raw-output)
+password=$(echo "$parameters" | jq -c '.password' --raw-output)
 
-JENKINS_DOMAIN=ec2-18-216-29-4.us-east-2.compute.amazonaws.com
-JENKINS_USER=iotkit
-JENKINS_PASSWORD=hudew7dt76g
+parameters=$(jq -c '.services | map(select(.serviceId == "github-repo"))[0].parameters' /run/configuration)
+githubUsername=$(echo "$parameters" | jq -c '.username' --raw-output)
+githubAccessToken=$(echo "$parameters" | jq -c '.accessToken' --raw-output)
+githubRepoName=$(echo "$parameters" | jq -c '.repoName' --raw-output)
 
-# crumb not needed for auth strategy
-# CRUMB=$(curl -s "http://$JENKINS_USER:$JENKINS_PASSWORD@$JENKINS_DOMAIN:8080/crumbIssuer/api/json" | jq '.crumb' -r)
-# curl -H "Jenkins-Crumb:$CRUMB" -X POST ...
+# can't pass output in JSON, so need to query AWS again
+# output=$(jq -c '.outputs | map(select(.serviceId == "arm-build-server"))[0].output' /run/configuration)
+# url=$(echo "$output" | jq -c '.url' --raw-output)
 
-# TODO - we need to wait here until Jenkins is ready...
+parameters=$(jq -c '.services | map(select(.serviceId == "arm-build-server"))[0].parameters' /run/configuration)
+export AWS_ACCESS_KEY_ID=$(echo "$parameters" | jq -c '.accessKeyId' --raw-output)
+export AWS_SECRET_ACCESS_KEY=$(echo "$parameters" | jq -c '.secretAccessKey' --raw-output)
+export AWS_DEFAULT_REGION=$(echo "$parameters" | jq -c '.defaultRegion' --raw-output)
+PROJECT_NAME=$(echo "$parameters" | jq -c '.projectName' --raw-output)
 
-curl -X POST "http://$JENKINS_USER:$JENKINS_PASSWORD@$JENKINS_DOMAIN:8080/credentials/store/system/domain/_/createCredentials" \
+PUBLIC_DNS=$(aws ec2 describe-instances --filters "Name=tag:project,Values=$PROJECT_NAME" --query "Reservations[].Instances[].PublicDnsName" | jq '.[0]' -r)
+url="http://$PUBLIC_DNS:8080"
+
+# spin until Jenkins is ready
+n=0
+until [ $n -ge 5 ]
+do
+  PUBLIC_DNS=$(aws ec2 describe-instances --filters "Name=tag:project,Values=$PROJECT_NAME" --query "Reservations[].Instances[].PublicDnsName" | jq '.[0]' -r)
+  if [ -z "$PUBLIC_DNS" ]
+  then 
+    echo "** EC2 instance created, waiting on public DNS"
+  else
+    echo "** EC2 instance created, public DNS: $PUBLIC_DNS"
+    break
+  fi  
+  n=$[$n+1]
+  sleep 5
+done
+
+echo "** Creating Docker Hub credentials"
+curl -u $username:$password -X POST "$url/credentials/store/system/domain/_/createCredentials" \
 --data-urlencode 'json={
   "": "0",
   "credentials": {
@@ -26,7 +53,8 @@ curl -X POST "http://$JENKINS_USER:$JENKINS_PASSWORD@$JENKINS_DOMAIN:8080/creden
   }
 }'
 
-curl -X POST "http://$JENKINS_USER:$JENKINS_PASSWORD@$JENKINS_DOMAIN:8080/credentials/store/system/domain/_/createCredentials" \
+echo "** Creating GitHub credentials"
+curl -u $username:$password -X POST "$url/credentials/store/system/domain/_/createCredentials" \
 --data-urlencode 'json={
   "": "0",
   "credentials": {
@@ -40,6 +68,8 @@ curl -X POST "http://$JENKINS_USER:$JENKINS_PASSWORD@$JENKINS_DOMAIN:8080/creden
 }'
 
 # TODO fix up pipeline XML
+curl -u $username:$password -s -X POST "$url/createItem?name=iotkit' --data-binary @pipeline.xml -H "Content-Type:text/xml"
 
-curl -s -XPOST "http://$JENKINS_DOMAIN:8080/createItem?name=iotkit' -u $JENKINS_USER:$JENKINS_PASSWORD --data-binary @pipeline.xml -H "Content-Type:text/xml"
-
+# copy the empty compose file (required by merger):
+mkdir -p /project
+cp docker-compose.yaml /project/docker-compose.yaml
