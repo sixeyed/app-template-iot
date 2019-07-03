@@ -1,13 +1,3 @@
-
-## TODO
-
-- demo app
--- git init
--- Jenkinsfile
-
-- admin app
--- runs localviv
-
 Copy `iotkit-library.yaml` to somewhere useful:
 
 ```
