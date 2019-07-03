@@ -18,17 +18,22 @@ namespace IotStarterKit.Pages
 
         public IndexModel()
         {
-            JenkinsUrl = io.File.ReadAllText("/jenkins-url");
-            JenkinsUsername = io.File.ReadAllText("/run/secrets/jenkins-username");
-            JenkinsPassword = io.File.ReadAllText("/run/secrets/jenkins-password");
+            JenkinsUrl = ReadSecret("jenkins-url");
+            JenkinsUsername = ReadSecret("jenkins-username");
+            JenkinsPassword = ReadSecret("jenkins-password");
 
-            var githubRepo = io.File.ReadAllText("/github-repo");
-            var githubUser = io.File.ReadAllText("/github-username");
+            var githubRepo = ReadSecret("github-repo");
+            var githubUser = ReadSecret("github-username");
             GitHubUrl = $"https://github.com/{githubRepo}/{githubUser}.git";
         }      
 
         public void OnGet()
         {
+        }
+
+        private string ReadSecret(string secretName)
+        {
+            return io.File.ReadAllText($"/run/secrets/{secretName}");
         }
     }
 }

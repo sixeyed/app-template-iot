@@ -6,11 +6,10 @@ services:
     build: {{ .Name }}
     ports:
       - {{ .Parameters.externalPort }}:80
-    configs:
-      - jenkins-url
+    secrets:
       - github-username
       - github-repo
-    secrets:
+      - jenkins-url
       - jenkins-username
       - jenkins-password
       - docker-hub-username

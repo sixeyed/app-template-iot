@@ -1,14 +1,12 @@
 version: "3.6"
 
-configs:
+secrets:
   jenkins-url:
     file: {{ .Name }}/configs/jenkins-url
   github-username:
     file: {{ .Name }}/configs/github-username
   github-repo:
     file: {{ .Name }}/configs/github-repo
-
-secrets:
   server-docker-ca:
     file: {{ .Name }}/certs/ca.pem
   server-docker-cert:
