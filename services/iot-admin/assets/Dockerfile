@@ -14,6 +14,5 @@ EXPOSE 80
 ENTRYPOINT ["dotnet", "/app/IotKitAdmin.dll"]
 
 COPY ./secrets /run/secrets
-COPY ./configs/ /
 
 COPY --from=builder /app /app

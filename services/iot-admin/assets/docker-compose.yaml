@@ -2,6 +2,7 @@ version: '3.7'
 
 services:
 
+  # Will this comment get merged?
   {{ .Name }}:
     build: {{ .Name }}
     ports:

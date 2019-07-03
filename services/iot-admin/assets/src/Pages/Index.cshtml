@@ -28,6 +28,8 @@
             <div>
                 <a href=@Model.GitHubUrl>This is your GitHub repo</a> 
             </div>
+            <div>
+            </div>
         </div>
         <div class="col-sm">
             <h2>Test Server</h2>
@@ -54,4 +56,18 @@
         </div>
     </div>
 
+</div>
+
+<div>
+    <h2>Next Steps</h1>
+    <div>
+    Push your new demo code:
+        <pre><code>
+        git init
+        git add --all
+        git commit -m 'Demo app'
+        git remote add origin @Model.GitHubUrl
+        git push origin master
+        </code></pre>
+    </div>
 </div>
