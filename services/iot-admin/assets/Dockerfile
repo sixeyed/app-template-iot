@@ -14,7 +14,8 @@ FROM mcr.microsoft.com/dotnet/core/aspnet:3.0.0-preview6
 COPY --from=docker:18.09 /usr/local/bin/docker /usr/bin
 
 EXPOSE 80
-ENTRYPOINT ["dotnet", "/app/IotKitAdmin.dll"]
+WORKDIR /app
+ENTRYPOINT ["dotnet", "IotKitAdmin.dll"]
 
 COPY ./secrets /run/secrets
 
