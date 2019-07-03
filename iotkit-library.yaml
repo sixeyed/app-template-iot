@@ -93,7 +93,19 @@ services:
       type: string
     - name: password
       description: SSH password
-      type: string    
+      type: string      
+- apiVersion: v1alpha1
+  kind: ServiceTemplate
+  metadata:
+    name: device-demo
+    platforms:
+      - linux
+  spec:
+    description: Sample IoT device app
+    icon: https://raw.githubusercontent.com/sixeyed/app-template-iot/master/img/dotnet.png
+    source:
+      image: sixeyed/iotkit-device-demo
+    title: Sample IoT device app
 templates:
 - apiVersion: v1alpha1
   kind: ApplicationTemplate
@@ -104,12 +116,14 @@ templates:
   spec:
     description: IoT Starter kit with Jenkins on A1
     services:
-    - name: arm-build-server
+    - name: Build server
       serviceId: arm-build-server
-    - name: github-repo
+    - name: GitHub repo
       serviceId: github-repo
-    - name: docker-hub-repo
+    - name: Docker Hub repo
       serviceId: docker-hub-repo    
-    - name: arm-device
-      serviceId: arm-device
+    - name: Local device
+      serviceId: arm-device    
+    - name: Sample device app
+      serviceId: device-demo
     title: IoT Starter kit with Jenkins on A1

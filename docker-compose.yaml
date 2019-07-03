@@ -21,3 +21,8 @@ services:
     image: sixeyed/iotkit-docker-hub-repo
     build:
       context: ./services/docker-hub-repo
+
+  device-demo-scaffold-svc:
+    image: sixeyed/iotkit-device-demo
+    build:
+      context: ./services/device-demo
