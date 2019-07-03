@@ -1,0 +1,57 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "IoT Starter Kit";
+}
+
+<div class="text-center">
+    <h1 class="display-4">IoT Starter Kit</h1>
+</div>
+
+      <div class="row">
+        <div class="col-sm">
+            <h2>Build Server</h2>
+            <div>
+                <img src="~/images/jenkins.png"/>
+                <a href=@Model.JenkinsUrl>This is your Jenkins server</a> 
+            </div>
+            <div>
+                Username: <code>@Model.JenkinsUsername</code>
+            </div>
+            <div>
+                Password: <code>@Model.JenkinsPassword</code>
+            </div>
+        </div>
+        <div class="col-sm">
+            <h2>GitHub</h2>
+            <img src="~/images/github.png"/>
+            <div>
+                <a href=@Model.GitHubUrl>This is your GitHub repo</a> 
+            </div>
+        </div>
+        <div class="col-sm">
+            <h2>Test Server</h2>
+            <img src="~/images/aws.png"/>
+        </div>
+        <div class="col-sm">
+            <h2>Test Device</h2>
+            <img src="~/images/arm.png"/>
+        </div>
+  </div>
+
+  <div class="row">
+        <div class="col-sm">            
+            <p>Jenkins is running on an A1 instance in AWS. That's a VM on a physical Arm-based server, so it will compile your IoT apps using the native CPU architecture</p>
+        </div>
+        <div class="col-sm">
+            <p>Push your local code to GitHub - that will trigger a build on Jenkins. The build packages your IoT app and service into Arm-based Docker images and shares them on Docker Hub.<p>
+        </div>
+        <div class="col-sm">
+            <p>You can use the same A1 instance running Jenkins as your test server. Click Deploy to run the IoT service from the latest build to the server.</p>
+        </div>
+        <div class="col-sm">
+            <p>Your local device has been set up with Docker. Click Deploy to run the IoT device app from the latest build onto your local Arm device.</p>
+        </div>
+    </div>
+
+</div>

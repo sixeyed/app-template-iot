@@ -1,0 +1,18 @@
+version: '3.7'
+
+services:
+
+  {{ .Name }}:
+    build: {{ .Name }}
+    ports:
+      - {{ .Parameters.externalPort }}:80
+    configs:
+      - jenkins-url
+      - github-username
+      - github-repo
+    secrets:
+      - jenkins-username
+      - jenkins-password
+      - docker-hub-username
+      - docker-hub-password
+  
