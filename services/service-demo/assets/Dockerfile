@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.0.100-preview4 AS builder
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0.100-preview6 AS builder
 
 WORKDIR /src
 COPY src/TelemetryService.csproj .
@@ -8,7 +8,7 @@ COPY src /src
 RUN dotnet publish -c Release -o /app TelemetryService.csproj
 
 # app
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.0.0-preview4
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.0.0-preview6
 
 EXPOSE 80
 ENTRYPOINT ["dotnet", "/app/TelemetryService.dll"]

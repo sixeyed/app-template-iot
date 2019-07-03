@@ -26,3 +26,8 @@ services:
     image: sixeyed/iotkit-device-demo
     build:
       context: ./services/device-demo
+
+  service-demo-scaffold-svc:
+    image: sixeyed/iotkit-service-demo
+    build:
+      context: ./services/service-demo
