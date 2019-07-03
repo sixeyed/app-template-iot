@@ -5,9 +5,10 @@ namespace IotStarterKit.Docker
 {
     public static class Secret
     {
-        public static string Read(string secretName)
+        public static string Read(string secretName, bool trim=true)
         {
-            return File.ReadAllText($"/run/secrets/{secretName}");
+            var secret = File.ReadAllText($"/run/secrets/{secretName}");
+            return trim ? secret.Trim() : secret;
         }
     }
 }
