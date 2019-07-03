@@ -74,29 +74,42 @@ export DOCKER_TLS_VERIFY='1'
 export DOCKER_CERT_PATH='/certs'
 docker swarm init
 
-echo "** Creating secrets for Jenkins credentials"
-parameters=$(jq -c '.services | map(select(.serviceId == "jenkins-pipeline"))[0].parameters' /run/configuration)
-jenkinsUsername=$(echo "$parameters" | jq -c '.username' --raw-output)
-jenkinsPassword=$(echo "$parameters" | jq -c '.password' --raw-output)
+echo "** Creating Jenkins user secrets"
+jenkinsUsername=$PROJECT_NAME
+jenkinsPassword=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13)
 echo $jenkinsUsername | docker secret create jenkins-username -
 echo $jenkinsPassword | docker secret create jenkins-password -
+
+echo "** Creating Docker Hub secrets"
+parameters=$(jq -c '.services | map(select(.serviceId == "docker-hub-repo"))[0].parameters' /run/configuration)
+hubUsername=$(echo "$parameters" | jq -c '.username' --raw-output)
+hubPassword=$(echo "$parameters" | jq -c '.password' --raw-output)
+echo $hubUsername | docker secret create docker-hub-username -
+echo $hubPassword | docker secret create docker-hub-password -
+
+echo "** Creating GitHub configs"
+parameters=$(jq -c '.services | map(select(.serviceId == "github-repo"))[0].parameters' /run/configuration)
+githubUsername=$(echo "$parameters" | jq -c '.username' --raw-output)
+githubRepoName=$(echo "$parameters" | jq -c '.repoName' --raw-output)
+echo $githubUsername | docker config create github-username -
+echo $githubRepoName | docker config create github-repo -
 
 echo "** Deploying Jenkins service"
 docker stack deploy -c jenkins.yml jenkins
 
 echo "** Writing outputs"
-
-# this doesn't work - subsequent services get their own copy of the original JSON, not this amended version
-# url="http://$PUBLIC_DNS:8080"
-# jq --arg u "$url" '.outputs[] | {outputs: [{serviceId: .serviceId, output: {url: $u}}]}' output.json > out.json
-# jq -s '.[0] + .[1]' /run/configuration out.json > tmp.json
-# cat tmp.json > /run/configuration
-
-mkdir -p /project/certs
+mkdir -p /project/certs /project/secrets /project/configs
 cp /certs/ca.pem /project/certs
 cp /certs/cert.pem /project/certs
 cp /certs/key.pem /project/certs
-echo $PUBLIC_DNS > /project/server-dns
+
+echo $jenkinsUsername > /project/secrets/jenkins-username
+echo $jenkinsPassword > /project/secrets/jenkins-password
+echo $hubUsername > /project/secrets/docker-hub-username
+
+echo "http://$PUBLIC_DNS:8080" > /project/configs/jenkins-url
+echo $githubUsername > /project/configs/github-username
+echo $githubRepoName > /project/configs/github-repo
 
 /interpolator -source /assets -destination /assets
 cp /assets/docker-compose.yaml /project/docker-compose.yaml

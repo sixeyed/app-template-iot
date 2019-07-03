@@ -10,7 +10,7 @@ services:
       - linux
   spec:
     description: Arm build server on AWS
-    icon: https://raw.githubusercontent.com/sixeyed/app-template-iot/master/img/aws.png
+    icon: https://raw.githubusercontent.com/sixeyed/app-template-iot/master/img/jenkins.png
     source:
       image: sixeyed/iotkit-arm-build-server
     title: Jenkins running on an A1 AWS instance for building Arm projects
@@ -49,25 +49,6 @@ services:
       type: string
     - name: repoName
       description: Repository name
-      type: string
-- apiVersion: v1alpha1
-  kind: ServiceTemplate
-  metadata:
-    name: jenkins-pipeline
-    platforms:
-      - linux
-  spec:
-    description: Deploy Jenkins build pipeline
-    icon: https://raw.githubusercontent.com/sixeyed/app-template-iot/master/img/jenkins.png
-    source:
-      image: sixeyed/iotkit-jenkins-pipeline
-    title: Jenkins pipeline
-    parameters:
-    - name: username
-      description: Username
-      type: string
-    - name: password
-      description: Password
       type: string
 - apiVersion: v1alpha1
   kind: ServiceTemplate
@@ -128,9 +109,7 @@ templates:
     - name: github-repo
       serviceId: github-repo
     - name: docker-hub-repo
-      serviceId: docker-hub-repo      
-    - name: jenkins-pipeline
-      serviceId: jenkins-pipeline      
+      serviceId: docker-hub-repo    
     - name: arm-device
       serviceId: arm-device
     title: IoT Starter kit with Jenkins on A1

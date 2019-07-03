@@ -12,11 +12,6 @@ services:
     build:
       context: ./services/github-repo
 
-  jenkins-pipeline-scaffold-svc:
-    image: sixeyed/iotkit-jenkins-pipeline
-    build:
-      context: ./services/jenkins-pipeline
-
   arm-device-scaffold-svc:
     image: sixeyed/iotkit-arm-device
     build:

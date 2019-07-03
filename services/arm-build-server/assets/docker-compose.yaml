@@ -1,13 +1,23 @@
 version: "3.6"
 
 configs:
-  {{ .Name }}-dns:
-    file: {{ .Name }}/server-dns
+  jenkins-url:
+    file: {{ .Name }}/configs/jenkins-url
+  github-username:
+    file: {{ .Name }}/configs/github-username
+  github-repo:
+    file: {{ .Name }}/configs/github-repo
 
 secrets:
-  {{ .Name }}-docker-ca:
+  server-docker-ca:
     file: {{ .Name }}/certs/ca.pem
-  {{ .Name }}-docker-cert:
+  server-docker-cert:
     file: {{ .Name }}/certs/cert.pem
-  {{ .Name }}-docker-key:
+  server-docker-key:
     file: {{ .Name }}/certs/key.pem
+  jenkins-username:
+    file: {{ .Name }}/secrets/jenkins-username
+  jenkins-password:
+    file: {{ .Name }}/secrets/jenkins-password
+  docker-hub-username:
+    file: {{ .Name }}/secrets/docker-hub-username
