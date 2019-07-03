@@ -4,7 +4,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building IoT Service...'
-                sh "docker image build --tag iotkitdemo/service-demo:$GIT_COMMIT ."
+                sh "cd service-demo && docker image build --tag iotkitdemo/service-demo:$GIT_COMMIT ."
             }
         }
         stage('Publish') {

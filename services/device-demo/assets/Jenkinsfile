@@ -4,7 +4,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building IoT device app...'
-                sh "docker image build --tag iotkitdemo/device-demo:$GIT_COMMIT ."
+                sh "cd device-demo && docker image build --tag iotkitdemo/device-demo:$GIT_COMMIT ."
             }
         }
         stage('Publish') {
