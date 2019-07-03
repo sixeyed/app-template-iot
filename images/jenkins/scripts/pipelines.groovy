@@ -16,9 +16,17 @@ def jenkins = Jenkins.instance;
 
 def scm = new GitSCM(gitHubUrl)
 scm.branches = [new BranchSpec("*/master")];
-def workflowJob = new WorkflowJob(jenkins, gitHubRepo);
-workflowJob.definition = new CpsScmFlowDefinition(scm, "Jenkinsfile");
+def workflowJob = new WorkflowJob(jenkins, "${gitHubRepo}-service");
+workflowJob.definition = new CpsScmFlowDefinition(scm, "service-demo/Jenkinsfile");
 def gitTrigger = new SCMTrigger("* * * * *");
+workflowJob.addTrigger(gitTrigger);
+workflowJob.save();
+
+scm = new GitSCM(gitHubUrl)
+scm.branches = [new BranchSpec("*/master")];
+workflowJob = new WorkflowJob(jenkins, "${gitHubRepo}-device");
+workflowJob.definition = new CpsScmFlowDefinition(scm, "device-demo/Jenkinsfile");
+gitTrigger = new SCMTrigger("* * * * *");
 workflowJob.addTrigger(gitTrigger);
 workflowJob.save();
 

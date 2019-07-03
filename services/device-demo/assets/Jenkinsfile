@@ -1,0 +1,22 @@
+pipeline {
+    agent any 
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building IoT device app...'
+                sh "docker image build --tag iotkitdemo/device-demo:$GIT_COMMIT ."
+            }
+        }
+        stage('Publish') {
+            steps {
+                echo 'Publishing IoT device app image...'
+                withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'HUB_PASSWORD', usernameVariable: 'HUB_USERNAME')]) {             
+                    sh "docker login -u $HUB_USERNAME -p $HUB_PASSWORD "                
+                    sh "docker image push iotkitdemo/device-demo:$GIT_COMMIT"
+                    sh "docker image tag iotkitdemo/device-demo:$GIT_COMMIT iotkitdemo/device-demo:latest"
+                    sh "docker image push iotkitdemo/device-demo:latest"
+                }
+            }
+        }
+    }
+}
