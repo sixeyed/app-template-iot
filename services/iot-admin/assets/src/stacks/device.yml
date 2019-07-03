@@ -1,0 +1,7 @@
+version: "3.6"
+
+services:
+  device-demo:
+    image: iotkitdemo/device-demo
+
+# TODO - parameterize

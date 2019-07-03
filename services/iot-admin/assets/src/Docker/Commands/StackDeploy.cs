@@ -7,15 +7,16 @@ namespace IotStarterKit.Docker.Commands
 {
     public class StackDeploy : Command
     {
-        /*
-        bundle stacks
-        */
+        private readonly string _composeFilePath;
 
-        public StackDeploy(Target target) : base(target) {}
+        public StackDeploy(string composeFilePath, Target target) : base(target) 
+        {
+            _composeFilePath = composeFilePath;
+        }
 
         protected override string GetCommandArgs()
         {
-            return "version";
+            return $"stack deploy -c {_composeFilePath} iotkit";
         }
     }
 }
