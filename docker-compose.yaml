@@ -31,3 +31,8 @@ services:
     image: sixeyed/iotkit-service-demo
     build:
       context: ./services/service-demo
+
+  iot-admin-scaffold-svc:
+    image: sixeyed/iotkit-iot-admin
+    build:
+      context: ./services/iot-admin

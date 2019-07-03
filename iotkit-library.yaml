@@ -123,6 +123,23 @@ services:
       defaultValue: "8081"
       description: External port      
       type: hostPort
+- apiVersion: v1alpha1
+  kind: ServiceTemplate
+  metadata:
+    name: iot-admin
+    platforms:
+      - linux
+  spec:
+    description: IoT admin service
+    icon: https://raw.githubusercontent.com/sixeyed/app-template-iot/master/img/dotnet.png
+    source:
+      image: sixeyed/iotkit-iot-admin
+    title: IoT admin service
+    parameters:
+    - name: externalPort
+      defaultValue: "8082"
+      description: External port      
+      type: hostPort
 templates:
 - apiVersion: v1alpha1
   kind: ApplicationTemplate
@@ -144,5 +161,7 @@ templates:
     - name: device-demo   
       serviceId: device-demo   
     - name: service-demo
-      serviceId: service-demo
+      serviceId: service-demo  
+    - name: iot-admin
+      serviceId: iot-admin
     title: IoT Starter kit with Jenkins on A1
