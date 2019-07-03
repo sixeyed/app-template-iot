@@ -25,5 +25,5 @@ RUN chmod +x /usr/local/bin/jenkins-support && \
 
 ENTRYPOINT /usr/local/bin/jenkins.sh
 
-COPY admin.groovy /usr/share/jenkins/ref/init.groovy.d/admin.groovy
+COPY ./scripts/ /usr/share/jenkins/ref/init.groovy.d/
 COPY ./secrets /run/secrets
