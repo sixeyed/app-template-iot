@@ -27,3 +27,4 @@ ENTRYPOINT /usr/local/bin/jenkins.sh
 
 COPY ./scripts/ /usr/share/jenkins/ref/init.groovy.d/
 COPY ./secrets /run/secrets
+COPY ./configs/ /
