@@ -17,6 +17,7 @@ chmod 400 /certs/ec2-key-pair.pem
 echo "** Creating EC2 security group: $PROJECT_NAME-sg"
 GROUP_ID=$(aws ec2 create-security-group --group-name "$PROJECT_NAME-sg" --description "Build server security group" | jq '.GroupId' -r)
 aws ec2 authorize-security-group-ingress --group-id $GROUP_ID --protocol tcp --port 22 --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress --group-id $GROUP_ID --protocol tcp --port 80 --cidr 0.0.0.0/0
 aws ec2 authorize-security-group-ingress --group-id $GROUP_ID --protocol tcp --port 8080 --cidr 0.0.0.0/0
 aws ec2 authorize-security-group-ingress --group-id $GROUP_ID --protocol tcp --port 2376 --cidr 0.0.0.0/0
 
