@@ -42,11 +42,11 @@ export DOCKER_TLS_VERIFY='1'
 export DOCKER_CERT_PATH='/certs'
 docker swarm init
 
-mkdir -p /project/certs
+mkdir -p /project/certs /project/configs
 cp /certs/ca.pem /project/certs
 cp /certs/cert.pem /project/certs
 cp /certs/key.pem /project/certs
-echo $ipAddress > /project/device-ip
+echo $ipAddress > /project/configs/device-ip
 
 /interpolator -source /assets -destination /assets
 cp /assets/docker-compose.yaml /project/docker-compose.yaml

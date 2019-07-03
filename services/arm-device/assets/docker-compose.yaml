@@ -1,13 +1,13 @@
 version: "3.6"
 
 configs:
-  {{ .Name }}-ip:
-    file: {{ .Name }}/device-ip
+  device-ip:
+    file: {{ .Name }}/configs/device-ip
 
 secrets:
-  {{ .Name }}-docker-ca:
+  device-docker-ca:
     file: {{ .Name }}/certs/ca.pem
-  {{ .Name }}-docker-cert:
+  device-docker-cert:
     file: {{ .Name }}/certs/cert.pem
-  {{ .Name }}-docker-key:
+  device-docker-key:
     file: {{ .Name }}/certs/key.pem
