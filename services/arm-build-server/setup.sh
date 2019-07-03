@@ -108,6 +108,7 @@ echo $jenkinsUsername > /project/secrets/jenkins-username
 echo $jenkinsPassword > /project/secrets/jenkins-password
 echo $hubUsername > /project/secrets/docker-hub-username
 
+echo $PUBLIC_DNS > /project/configs/server-dns
 echo "http://$PUBLIC_DNS:8080" > /project/configs/jenkins-url
 echo $githubUsername > /project/configs/github-username
 echo $githubRepoName > /project/configs/github-repo

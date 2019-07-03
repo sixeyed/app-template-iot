@@ -7,6 +7,8 @@ secrets:
     file: {{ .Name }}/configs/github-username
   github-repo:
     file: {{ .Name }}/configs/github-repo
+  server-dns:
+    file: {{ .Name }}/configs/server-dns
   server-docker-ca:
     file: {{ .Name }}/certs/ca.pem
   server-docker-cert:

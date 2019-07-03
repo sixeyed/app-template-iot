@@ -34,10 +34,16 @@
         <div class="col-sm">
             <h2>Test Server</h2>
             <img src="~/images/aws.png"/>
+            <form asp-page-handler="test" method="post">
+                <button class="btn btn-default">Deploy</button>
+            </form>
         </div>
         <div class="col-sm">
-            <h2>Test Device</h2>
-            <img src="~/images/arm.png"/>
+            <h2>Local Device</h2>
+            <img src="~/images/arm.png"/>            
+            <form asp-page-handler="local" method="post">
+                <button class="btn btn-default">Deploy</button>
+            </form>
         </div>
   </div>
 

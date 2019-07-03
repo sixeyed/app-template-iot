@@ -14,4 +14,17 @@ services:
       - jenkins-username
       - jenkins-password
       - docker-hub-username
-  
+      - server-dns
+      - source: server-docker-ca
+        target: /certs/server/ca.pem        
+      - source: server-docker-cert
+        target: /certs/server/cert.pem        
+      - source: server-docker-key
+        target: /certs/server/key.pem
+      - device-ip
+      - source: device-docker-ca
+        target: /certs/device/ca.pem        
+      - source: device-docker-cert
+        target: /certs/device/cert.pem        
+      - source: device-docker-key
+        target: /certs/device/key.pem 
