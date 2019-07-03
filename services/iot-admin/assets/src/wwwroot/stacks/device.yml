@@ -4,6 +4,6 @@ services:
   device-demo:
     image: iotkitdemo/device-demo
     environment:
-      - TelemetryService:Url=http://{server-dns}
+      - TelemetryService:Url=http://{server-dns}/readings
 
 # TODO - parameterize

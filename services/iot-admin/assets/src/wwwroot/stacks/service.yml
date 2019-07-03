@@ -1,7 +1,7 @@
 version: "3.6"
 
 services:
-  device-demo:
+  service-demo:
     image: iotkitdemo/service-demo
     ports:
       - "80:80"   

@@ -19,6 +19,8 @@ namespace IotStarterKit.Pages
         public string JenkinsUsername {get; private set;}
         public string JenkinsPassword {get; private set;}
         public string GitHubUrl {get; private set;}
+        public string DockerHubUrl {get; private set;}
+        public string TestServerUrl {get; private set;}
 
         public IndexModel(ILogger<IndexModel> logger)
         {
@@ -27,6 +29,12 @@ namespace IotStarterKit.Pages
             JenkinsUrl = Secret.Read("jenkins-url");
             JenkinsUsername = Secret.Read("jenkins-username");
             JenkinsPassword = Secret.Read("jenkins-password");
+
+            var serverDns = Secret.Read("server-dns");
+            TestServerUrl = $"http://{serverDns}/stats";
+
+            var dockerHubUser = Secret.Read("docker-hub-username");
+            DockerHubUrl = $"https://hub.docker.com/u/{dockerHubUser}";
 
             var githubRepo = Secret.Read("github-repo");
             var githubUser = Secret.Read("github-username");
@@ -47,9 +55,8 @@ namespace IotStarterKit.Pages
         public void OnGet()
         {
         }
-
         
-        public void OnPostTest()
+        public void OnPostDeployTest()
         {
             var composeFilePath = io.Path.Combine(io.Directory.GetCurrentDirectory(), "wwwroot", "stacks", "service.yml");
             _logger.LogInformation($"Deploying stack from: {composeFilePath}, on: Test Server");
@@ -58,11 +65,27 @@ namespace IotStarterKit.Pages
             _logger.LogDebug(output);
         }
 
-        public void OnPostLocal()
+        public void OnPostDeployLocal()
         {           
             var composeFilePath = io.Path.Combine(io.Directory.GetCurrentDirectory(), "wwwroot", "stacks", "device.yml");
             _logger.LogInformation($"Deploying stack from: {composeFilePath}, on: Local Device");
             var cmd = new StackDeploy(composeFilePath, Target.LocalDevice);
+            var output = cmd.Run();
+            _logger.LogDebug(output);
+        }
+
+        public void OnPostRemoveTest()
+        {            
+            _logger.LogInformation($"Removing stack on: Test Server");
+            var cmd = new StackRemove(Target.TestServer);
+            var output = cmd.Run();
+            _logger.LogDebug(output);
+        }
+
+        public void OnPostRemoveLocal()
+        {           
+            _logger.LogInformation($"Removing stack on: Local Device");
+            var cmd = new StackRemove(Target.LocalDevice);
             var output = cmd.Run();
             _logger.LogDebug(output);
         }
