@@ -10,9 +10,14 @@ services:
       - jenkins-home:/var/jenkins_home
     networks:
       - frontend
+    configs:
+      - github-username
+      - github-repo
     secrets:
       - jenkins-username
       - jenkins-password
+      - docker-hub-username
+      - docker-hub-password
     deploy:
       mode: replicated
       replicas: 1
@@ -27,9 +32,19 @@ networks:
 volumes:
   jenkins-home:
 
+configs:
+  github-username:
+    external: true
+  github-repo:
+    external: true
+
 secrets:
   jenkins-username:
     external: true
   jenkins-password:
+    external: true
+  docker-hub-username:
+    external: true
+  docker-hub-password:
     external: true
   
