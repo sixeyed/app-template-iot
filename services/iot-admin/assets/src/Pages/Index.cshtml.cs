@@ -24,7 +24,7 @@ namespace IotStarterKit.Pages
 
             var githubRepo = ReadSecret("github-repo");
             var githubUser = ReadSecret("github-username");
-            GitHubUrl = $"https://github.com/{githubRepo}/{githubUser}.git";
+            GitHubUrl = $"https://github.com/{githubUser}/{githubRepo}.git";
         }      
 
         public void OnGet()
