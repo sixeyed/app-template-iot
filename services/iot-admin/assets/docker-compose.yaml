@@ -14,5 +14,4 @@ services:
       - jenkins-username
       - jenkins-password
       - docker-hub-username
-      - docker-hub-password
   
