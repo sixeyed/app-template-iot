@@ -23,6 +23,7 @@
     </div>
 </div>
 
+<!--
 <div class="row">
     <div class="col-sm">
         <div>
@@ -39,15 +40,21 @@
         <img src="~/images/arm.png" class="img-fluid" />
     </div>
 </div>
-
+-->
 
 <form method="post">
     <div class="row">
         <div class="col-sm">
-            <a href=@Model.JenkinsUrl>This is your Jenkins server</a>
+            <a href=@Model.JenkinsUrl target="_blank">This is your Jenkins server</a>            
+            <div>
+                Username: <code>@Model.JenkinsUsername</code>
+            </div>
+            <div>
+                Password: <code>@Model.JenkinsPassword</code>
+            </div>
         </div>
         <div class="col-sm">
-            <a href=@Model.GitHubUrl>This is your GitHub repo</a>
+            <a href=@Model.GitHubUrl target="_blank">This is your GitHub repo</a>
         </div>
         <div class="col-sm">
             <input type="submit" asp-page-handler="test" value="Deploy" />

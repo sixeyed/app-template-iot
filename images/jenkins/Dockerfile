@@ -1,7 +1,8 @@
 FROM iotkit/jenkins:2.176.1
 
 RUN apk add --no-cache \
-    curl
+    curl \
+    docker
 
 ENV JENKINS_HOME="/var/jenkins_home" \
     JENKINS_UC="https://updates.jenkins.io" \
