@@ -133,16 +133,16 @@ templates:
   spec:
     description: IoT Starter kit with Jenkins on A1
     services:
-    - name: Build server
+    - name: build-server
       serviceId: arm-build-server
-    - name: GitHub repo
+    - name: github-repo
       serviceId: github-repo
-    - name: Docker Hub repo
+    - name: docker-hub-repo 
       serviceId: docker-hub-repo    
-    - name: Local device
+    - name: local-device
       serviceId: arm-device    
-    - name: Sample Iot device app
-      serviceId: service-demo   
-    - name: Sample IoT service
+    - name: device-demo   
+      serviceId: device-demo   
+    - name: service-demo
       serviceId: service-demo
     title: IoT Starter kit with Jenkins on A1
